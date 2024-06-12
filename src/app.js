@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import colors from "colors";
 import logger from "./utils/logger";
+import connect from "./utils/database.connection";
 
 const app = express();
 const PORT = process.env.PORT || "8090";
@@ -16,7 +17,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  logger.info("");
+  logger.info(`Server is up and running on PORT ${PORT}`);
   console.log(
     "🚀" +
       "  " +
@@ -24,4 +25,5 @@ app.listen(PORT, () => {
       " " +
       "🔥"
   );
+  connect();
 });
