@@ -18,7 +18,7 @@ const googleAuth = (passport) => {
         const userObj = {
           googleId: profile.id,
           displayName: profile.displayName,
-          gmail: profile.profile.email[0].value,
+          gmail: profile.emails[0].value,
           image: profile.photos[0].value,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
@@ -30,7 +30,7 @@ const googleAuth = (passport) => {
         if (user) {
           return callback(null, user);
         }
-        User.create({ userObj })
+        User.create(userObj)
           .then((user) => {
             return callback(null, user);
           })
@@ -49,6 +49,8 @@ const googleAuth = (passport) => {
       callback(err, user);
     });
   });
+
+  
 };
 
 export default googleAuth;

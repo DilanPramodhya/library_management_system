@@ -3,11 +3,12 @@ import express from "express";
 import cors from "cors";
 import colors from "colors";
 import logger from "./utils/logger";
-import connect from "./utils/database.connection";
-import googleAuth from "./configs/google.auth";
 import passport from "passport";
 import session from "express-session";
 import config from "./configs";
+import MongoStore from "connect-mongo";
+import connect from "./utils/database.connection";
+import googleAuth from "./configs/google.auth";
 import routesInit from "./api/routes";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(
     secret: config.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: config.DB_CONNECTION_STRING }),
     cookie: {
       secure: false,
       expires: new Date(Date.now() + 10000),
